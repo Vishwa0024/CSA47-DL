@@ -1,0 +1,54 @@
+Q 6(d) . Finding accuracy value of iris data set using DECISION TREE algorithm.
+ # Importing the dataset
+dataset = pd.read_csv("/content/IRIS.csv ")
+# Splitting the dataset into the Training set and Test set
+# Feature Scaling
+# Display the Decision Tree
+# Predicting the Test set results
+# Display the results (confusion matrix and accuracy)
+
+# 6(d)
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import confusion_matrix, accuracy_score
+from sklearn.preprocessing import StandardScaler
+from sklearn.tree import plot_tree
+import matplotlib.pyplot as plt
+
+# Importing the dataset
+dataset = pd.read_csv("/content/iris.csv")
+
+# Splitting the dataset into the features (X) and the target variable (y)
+X = dataset.iloc[:, :-1].values
+y = dataset.iloc[:, -1].values
+
+# Splitting the dataset into the Training set and Test set
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+
+# Feature Scaling (not always necessary for Decision Trees but can be useful)
+sc = StandardScaler()
+X_train = sc.fit_transform(X_train)
+X_test = sc.transform(X_test)
+
+# Fitting Decision Tree to the training set
+classifier = DecisionTreeClassifier()
+classifier.fit(X_train, y_train)
+
+# Display the Decision Tree
+plt.figure(figsize=(12, 8))
+plot_tree(classifier, feature_names=dataset.columns[:-1], class_names=dataset['variety'].unique(), filled=True)
+plt.show()
+
+# Predicting the Test set results
+y_pred = classifier.predict(X_test)
+
+# Displaying the confusion matrix
+conf_matrix = confusion_matrix(y_test, y_pred)
+print("Confusion Matrix:")
+print(conf_matrix)
+
+# Displaying the accuracy
+accuracy = accuracy_score(y_test, y_pred)
+print("Accuracy:", accuracy)

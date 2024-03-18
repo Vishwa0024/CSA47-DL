@@ -1,0 +1,41 @@
+Q6(a) . Finding accuracy value of iris data set using KNN algorithm.
+dataset = pd.read_csv("/content/IRIS.csv")
+"""
+The breast cancer dataset has the following features: Sample code number, Clump Thickness, Uniformity of Cell Size, 
+Uniformity of Cell Shape, Marginal Adhesion, Single Epithelial Cell Size, Bare Nuclei, Bland Chromatin,
+ Normal Nucleoli, Mitosis, Class.
+#Feature Scaling.
+#Training the K-Nearest Neighbors (K-NN) Classification model on the Training set.
+classifier.fit(X_train, y_train)
+
+
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
+
+# Load the Iris dataset
+iris = load_iris()
+
+# Split the dataset into features (X) and target variable (y)
+X = iris.data
+y = iris.target
+
+# Perform feature scaling
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
+
+# Train the KNN classifier on the training set
+classifier = KNeighborsClassifier(n_neighbors=5)
+classifier.fit(X_train, y_train)
+
+# Make predictions on the testing set
+y_pred = classifier.predict(X_test)
+
+# Evaluate the accuracy of the classifier
+accuracy = accuracy_score(y_test, y_pred)
+print("Accuracy:", accuracy)
